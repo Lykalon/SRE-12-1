@@ -56,9 +56,23 @@ add_second_disk()
     vgextend vgKVM /dev/sdb
 }
 
-reject_ping()
+iptables_rules()
 {
+    iptables -A INPUT -s 192.168.0.0/16 -j ACCEPT
+    iptables -A INPUT -p tcp --dport 22 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p icmp --icmp-type 8 -j REJECTiptables -A INPUT -s 11.22.121.0/24 -j REJECT
+    iptables-save
+}
 
+make_log_dir()
+{
+    mkdir /var/log/customlogs
+}
+
+only_4096_connections()
+{
+    echo "net.netfilter.nf_conntrack_max=4096" >> /etc/sysctl.conf
+    sysctl -p
 }
 
 echo "------------------------"
@@ -87,5 +101,6 @@ fi
 restrict_login_password
 create_users
 create_ssh_keys
-reject_ping
+iptables_rules
+only_4096_connections
 systemctl restart ssh
