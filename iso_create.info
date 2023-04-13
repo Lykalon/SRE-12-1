@@ -1,0 +1,2 @@
+net-tools bird bird-bgp lldpd
+lldpd needs more packages: libevent-2.1-7 libsensors-config libsensors5 libsnmp-base libsnmp40 libwrap0
