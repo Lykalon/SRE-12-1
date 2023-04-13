@@ -1,3 +1,6 @@
+#Скрипт находится в разработке. Подразумевается, что настройка машины от и до будет выполнена с помощью данного скрипта
+#На сервер копируются файлы installing.sh rsa_pub users и дериктория user_keys
+
 #!/bin/bash
 
 install_packages()
@@ -21,7 +24,7 @@ create_ssh_keys()
 
 add_admin_group_sudoers()
 {
-    echo '%admin ALL=(ALL)ALL' >> /path/to/sudoers
+    echo '%admin ALL=(ALL:ALL) ALL' >> /etc/sudoers
 }
 
  add_admini_role()
@@ -53,6 +56,11 @@ add_second_disk()
     vgextend vgKVM /dev/sdb
 }
 
+reject_ping()
+{
+
+}
+
 echo "------------------------"
 echo "Welcome to setup script!"
 echo "------------------------"
@@ -79,3 +87,5 @@ fi
 restrict_login_password
 create_users
 create_ssh_keys
+reject_ping
+systemctl restart ssh
